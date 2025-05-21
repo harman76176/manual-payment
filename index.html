@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document Payment Portal</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+    .section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .hidden { display: none; }
+    button { padding: 10px 15px; margin-top: 10px; }
+  </style>
+  <script>
+    function showDetails(method) {
+      document.getElementById('bank-details').style.display = method === 'bank' ? 'block' : 'none';
+      document.getElementById('upi-details').style.display = method === 'upi' ? 'block' : 'none';
+      document.getElementById('qr-details').style.display = method === 'qr' ? 'block' : 'none';
+    }
+    function toggleAdminLogin() {
+      const adminSection = document.getElementById('admin-section');
+      adminSection.classList.toggle('hidden');
+    }
+  </script>
+</head>
+<body>
+  <h2>📃 Document Payment Portal</h2>
+
+  <div class="section">
+    <h3>1. Choose Payment Method</h3>
+    <label><input type="radio" name="method" onclick="showDetails('bank')"> Bank Transfer</label><br>
+    <label><input type="radio" name="method" onclick="showDetails('upi')"> UPI</label><br>
+    <label><input type="radio" name="method" onclick="showDetails('qr')"> QR Code Scan</label>
+
+    <div id="bank-details" class="hidden">
+      <p><strong>Bank Name:</strong> Kotak Mahindra Bank</p>
+      <p><strong>Account Number:</strong> 4949913629</p>
+      <p><strong>IFSC Code:</strong> KKBK0004341</p>
+    </div>
+    <div id="upi-details" class="hidden">
+      <p><strong>UPI ID:</strong> devilhunter76176@oksbi</p>
+    </div>
+    <div id="qr-details" class="hidden">
+      <p><strong>Scan the QR Code to Pay:</strong></p>
+      <img src="qr.jpg" width="200" />
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>2. Submit Payment Details</h3>
+    <form action="submit.php" method="POST">
+      <label>Phone Number: <input type="text" name="phone" required></label><br><br>
+      <label>Transaction ID: <input type="text" name="transaction" required></label><br><br>
+      <label>Amount Paid (₹): <input type="number" name="amount" step="0.01" required></label><br><br>
+
+      <button type="submit">Submit Payment</button>
+    </form>
+  </div>
+
+  <div class="section">
+    <h3>3. Check Payment Status</h3>
+    <form action="check.php" method="POST">
+      <label>Enter Your Phone Number: <input type="text" name="phone" required></label>
+      <button type="submit">Check Status</button>
+    </form>
+  </div>
+
+  <button onclick="toggleAdminLogin()">🔒 Admin Login</button>
+  <div class="section hidden" id="admin-section">
+    <h3>Admin Login</h3>
+    <form action="admin/login.php" method="POST">
+      <label>Username: <input type="text" name="username" required></label><br><br>
+      <label>Password: <input type="password" name="password" required></label><br><br>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</body>
+</html>
